@@ -1,49 +1,79 @@
-from back_end import kalkulator
+import tkinter as tk
+from tkinter import messagebox
+from back_end import kalkulator  # Import the backend function
 
-def printMeny():
-    print("------------------- Kalkulator -------------------")
-    print("| 1. Legg sammen (pluss)                         |")
-    print("| 2. Trekk fra   (minus)                         |")
-    print("| 3. Gange       (gange)                         |")
-    print("| 4. Dele        (dele)                          |")
-    print("| 5. Avslutt                                     |")
-    print("--------------------------------------------------")
-    menyvalg = input("Velg operasjon fra menyen: ")
-    utfoerMenyvalg(menyvalg)
-
-
+# Function to handle the selected operation
 def utfoerMenyvalg(valgtTall):
-    if valgtTall == "1":
-        kalkulator(0)
-        pause_og_fortsett()
-    elif valgtTall == "2":
-        kalkulator(1)
-        pause_og_fortsett()
-    elif valgtTall == "3":
-        kalkulator(2)
-        pause_og_fortsett()
-    elif valgtTall == "4":
-        kalkulator(3)
-        pause_og_fortsett()
+    if valgtTall in ["1", "2", "3", "4"]:
+        # Create a new window for number input
+        input_window = tk.Toplevel(root)
+        input_window.title("Input tall")
+        input_window.geometry("300x250")
+
+        label1 = tk.Label(input_window, text="Skriv inn det første tallet:")
+        label1.pack(pady=5)
+        entry1 = tk.Entry(input_window)
+        entry1.pack(pady=5)
+
+        label2 = tk.Label(input_window, text="Skriv inn det andre tallet:")
+        label2.pack(pady=5)
+        entry2 = tk.Entry(input_window)
+        entry2.pack(pady=5)
+
+        # Label to display the result
+        result_label = tk.Label(input_window, text="", font=('Arial', 12))
+        result_label.pack(pady=10)
+
+        def beregn():
+            tall1 = entry1.get()
+            tall2 = entry2.get()
+            if tall1.isdigit() and tall2.isdigit():
+                # Call the backend function and capture the result
+                result = kalkulator(int(valgtTall) - 1, tall1, tall2)
+                # Update the result label with the calculated result
+                result_label.config(text=f"Resultat: {result}")
+            else:
+                messagebox.showerror("Feil", "Vennligst skriv inn gyldige tall.")
+
+        beregn_button = tk.Button(input_window, text="Beregn", command=beregn)
+        beregn_button.pack(pady=10)
+
     elif valgtTall == "5":
-        bekreftelse = input("Er du sikker på at du vil avslutte? J/N ")
-        if bekreftelse.lower() == "j":
-            exit()
-        else:
-            printMeny()
+        bekreftelse = messagebox.askyesno("Bekreft avslutning", "Er du sikker på at du vil avslutte?")
+        if bekreftelse:
+            root.destroy()  # Close the application window
     else:
-        nyttForsoek = input("*** Ugyldig valg."
-                            "Velg et tall mellom 1-4."
-                            " Trykk for å fortsette *** ")
-        printMeny()
+        messagebox.showerror("Ugyldig valg", "Velg et gyldig tall mellom 1-5.")
 
 
-
-def pause_og_fortsett():
-    input("-- Trykk en tast for å fortsette --")
-    printMeny()
-
-
-printMeny()
+# Function to handle button click
+def handle_button_click(valgtTall):
+    utfoerMenyvalg(valgtTall)
 
 
+# Initialize tkinter window
+root = tk.Tk()
+root.title("Kalkulator")
+root.geometry("400x300")
+
+# Creating menu labels and buttons
+label = tk.Label(root, text="------------------- Kalkulator -------------------", font=('Arial', 12))
+label.pack(pady=10)
+
+button1 = tk.Button(root, text="Pluss", command=lambda: handle_button_click("1"), width=40)
+button1.pack(pady=5)
+
+button2 = tk.Button(root, text="Minus", command=lambda: handle_button_click("2"), width=40)
+button2.pack(pady=5)
+
+button3 = tk.Button(root, text="Gange", command=lambda: handle_button_click("3"), width=40)
+button3.pack(pady=5)
+
+button4 = tk.Button(root, text="Dele", command=lambda: handle_button_click("4"), width=40)
+button4.pack(pady=5)
+
+button5 = tk.Button(root, text="Avslutt", command=lambda: handle_button_click("5"), width=40)
+button5.pack(pady=5)
+
+# Start the tkinter main loop
+root.mainloop()

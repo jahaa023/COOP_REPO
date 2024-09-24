@@ -1,6 +1,5 @@
-def kalkulator(type):
-    tall1 = input("Skriv inn det første tallet: ")
-    tall2 = input("Skriv inn det andre tallet: ")
+def kalkulator(type, tall1, tall2):
+
     if type == 0:
         result = int(tall1) + int(tall2)
         symbol = " pluss "
@@ -8,9 +7,10 @@ def kalkulator(type):
         result = int(tall1) - int(tall2)
         symbol = " minus "
     elif type == 2:
-        result = int(tall1)*int(tall2)
+        result = int(tall1) * int(tall2)
         symbol = " ganger "
     else:
-        result = round(int(tall1)/int(tall2))
+        result = round(int(tall1) / int(tall2))
         symbol = " delt på "
-    print(f'{tall1}{symbol}{tall2} er lik {result}')
+
+    return result  # Return the result instead of printing it
