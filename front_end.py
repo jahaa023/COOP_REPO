@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import messagebox
 from back_end import kalkulator  # Import the backend function
 
-# Function to handle the selected operation
+
 def utfoerMenyvalg(valgtTall):
     if valgtTall in ["1", "2", "3", "4"]:
-        # Create a new window for number input
+        # Create a new window  
         input_window = tk.Toplevel(root)
         input_window.title("Input tall")
         input_window.geometry("300x250")
@@ -20,7 +20,7 @@ def utfoerMenyvalg(valgtTall):
         entry2 = tk.Entry(input_window)
         entry2.pack(pady=5)
 
-        # Label to display the result
+        # Display result
         result_label = tk.Label(input_window, text="", font=('Arial', 12))
         result_label.pack(pady=10)
 
@@ -28,35 +28,35 @@ def utfoerMenyvalg(valgtTall):
             tall1 = entry1.get()
             tall2 = entry2.get()
             if tall1.isdigit() and tall2.isdigit():
-                # Call the backend function and capture the result
+        
                 result = kalkulator(int(valgtTall) - 1, tall1, tall2)
-                # Update the result label with the calculated result
+           
                 result_label.config(text=f"Resultat: {result}")
             else:
                 messagebox.showerror("Feil", "Vennligst skriv inn gyldige tall.")
 
-        beregn_button = tk.Button(input_window, text="Beregn", command=beregn)
+        beregn_button = tk.Button(input_window, text="Sum", command=beregn)
         beregn_button.pack(pady=10)
 
     elif valgtTall == "5":
         bekreftelse = messagebox.askyesno("Bekreft avslutning", "Er du sikker på at du vil avslutte?")
         if bekreftelse:
-            root.destroy()  # Close the application window
+            root.destroy()  # Close window
     else:
         messagebox.showerror("Ugyldig valg", "Velg et gyldig tall mellom 1-5.")
 
 
-# Function to handle button click
+
 def handle_button_click(valgtTall):
     utfoerMenyvalg(valgtTall)
 
 
-# Initialize tkinter window
+# Tkinter window size
 root = tk.Tk()
 root.title("Kalkulator")
 root.geometry("400x300")
 
-# Creating menu labels and buttons
+
 label = tk.Label(root, text="------------------- Kalkulator -------------------", font=('Arial', 12))
 label.pack(pady=10)
 
