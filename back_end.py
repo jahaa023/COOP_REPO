@@ -1,6 +1,17 @@
+def sjekk_om_nummer(andre_forste):
+    while True:
+        try:
+            userInput = int(input(f'Skriv inn det {andre_forste} tallet: '))       
+        except ValueError:
+            print("Ugyldig tall")
+            continue
+        else:
+            break
+    return userInput
+
 def kalkulator(type):
-    tall1 = input("Skriv inn det første tallet: ")
-    tall2 = input("Skriv inn det andre tallet: ")
+    tall1 = sjekk_om_nummer("første")
+    tall2 = sjekk_om_nummer("andre")
     if type == 0:
         result = int(tall1) + int(tall2)
         symbol = " pluss "
